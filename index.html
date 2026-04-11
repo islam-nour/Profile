@@ -29,9 +29,9 @@
     html{scroll-behavior:smooth;}
     body{background:var(--bg);color:var(--text);font-family:var(--font-head);overflow-x:hidden;letter-spacing:.01em;}
     #bg-canvas{position:fixed;inset:0;z-index:0;pointer-events:none;}
-    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;gap:43%;padding:18px 60px;background:rgba(5,10,18,0.65);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);}
+    nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;align-items:center;justify-content:space-around;padding:18px 60px;background:rgba(5,10,18,0.65);backdrop-filter:blur(18px);border-bottom:1px solid var(--border);}
     .nav-logo{font-size:1.4rem;font-weight:bold;letter-spacing:.08em;color:var(--cyan);}
-    .nav-links{display:flex;gap:90px;list-style:none;}
+    .nav-links{display:flex;gap:40px;list-style:none;}
     .nav-links a{color:var(--muted);text-decoration:none;font-size:.82rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;transition:color .2s;position:relative;}
     .nav-links a::after{content:"";position:absolute;bottom:-4px;left:0;width:0;height:1px;background:var(--cyan);transition:width .3s;}
     .nav-links a:hover{color:var(--cyan);}
@@ -142,6 +142,14 @@
     @keyframes pulse{0%,100%{box-shadow:0 0 6px var(--cyan);}50%{box-shadow:0 0 16px var(--cyan);}}
     @keyframes spin{from{transform:translate(-50%,-50%) rotate(0deg);}to{transform:translate(-50%,-50%) rotate(360deg);}}
     @keyframes blink{0%,100%{opacity:1;}50%{opacity:0;}}
+    .menu-toggle{
+  display:none;
+  font-size:24px;
+  cursor:pointer;
+}
+.phone-menu{
+  display:none;
+}
     @media(max-width:860px){
       nav{padding:16px 20px;}
       .nav-links{gap:18px;}
@@ -156,6 +164,33 @@
       footer{flex-direction:column;gap:8px;text-align:center;}
       .contact-card{padding:36px 24px;}
       .divider{margin:0 20px;}
+        .menu-toggle{
+    display:block;
+  }
+  .nav-links{
+    position:absolute;
+    top:60px;
+    right:0;
+    background:#0b0f17;
+    width:30%;
+    flex-direction:column;
+    display:none;
+    padding:20px;
+    margin:12px;
+    border:2px solid var(--border);
+    border-radius:13px;
+
+  }
+  .sitelinks{
+    display:none;
+  }
+.phone-menu{
+    display:flex;
+  }
+  .nav-links.active{
+    display:flex;
+  }
+
     }
     @media(max-width:480px){.nav-links{display:none;}}
 
@@ -166,12 +201,19 @@
 <canvas id="bg-canvas"></canvas>
 <nav>
   <div class="nav-logo">The Developer</div>
-  <ul class="nav-links">
+  <ul class="nav-links sitelinks">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
   </ul>
+  <div class="menu-toggle">☰</div>
+<ul class="nav-links phone-menu">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
+</ul>
 </nav>
 <main>
   <section id="hero">
@@ -293,6 +335,12 @@
   <span style="font-size:.7rem;">Built with <span style="color:var(--cyan)">HTML · CSS · JS</span></span>
 </footer>
 <script>
+const toggle=document.querySelector(".menu-toggle");
+const nav=document.querySelector(".nav-links");
+
+toggle.onclick=()=>{
+  nav.classList.toggle("active");
+};
 (function(){
   const canvas=document.getElementById("bg-canvas");
   const ctx=canvas.getContext("2d");
